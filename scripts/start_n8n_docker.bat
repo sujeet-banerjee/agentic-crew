@@ -1,0 +1,1 @@
+@powershell.exe -ExecutionPolicy Bypass -File "%~dp0run_n8n_docker.ps1"

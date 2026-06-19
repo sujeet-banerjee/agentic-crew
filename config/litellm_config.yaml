@@ -1,0 +1,13 @@
+model_list:
+  # 1. The main LLM
+  - model_name: ollama/llama3
+    litellm_params:
+      model: ollama/llama3
+      # Use the docker service name 'ollama' instead of localhost or host.docker.internal
+      api_base: "http://ollama:11434" 
+      
+  # 2. The Embeddings Model (used in your Ragas evaluations)
+  - model_name: ollama/nomic-embed-text
+    litellm_params:
+      model: ollama/nomic-embed-text
+      api_base: "http://ollama:11434"
