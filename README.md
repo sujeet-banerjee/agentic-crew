@@ -44,16 +44,43 @@ docker-compose up -d
 
 
 
+###### Locate Stuff
+
+
+
+**Ollama**
+
+&#x20;  **<PowerShell>**
+
+&#x20;  PS C:\\Sujeet\\showcase\\agentic-crew> docker exec ollama ollama list
+
+&#x20;  NAME                       ID              SIZE      MODIFIED
+
+&#x20;  nomic-embed-text:latest    0a109f422b47    274 MB    2 weeks ago
+
+&#x20;  llama3:latest              365c0bd3c000    4.7 GB    2 weeks ago
+
+
+
+&#x20;  PS C:\\Sujeet\\showcase\\agentic-crew> curl http://localhost:11434/api/tags
+
+&#x20;  ...
+
+
+
+
+
 ###### Python Scripts Runs:
 
 * When you clone this repo, duplicate the .env.example file, rename the copy to .env, and fill in your actual passwords and keys.
 * Create a virtual ENV for python installs, and switch to the Virtual-env:
-     python -m venv ai\_env
-     source ai\_env/bin/activate  # Windows: ai\_env\\Scripts\\activate
-     pip install langchain langchain-openai langgraph ragas pandas datasets psycopg psycopg-pool streamlit
+python -m venv ai\_env
+source ai\_env/bin/activate  # Windows: ai\_env\\Scripts\\activate
+pip install langchain langchain-openai langgraph ragas pandas datasets psycopg psycopg-pool streamlit
 
 &#x20;       pip install --upgrade ragas langchain-community langchain langchain-openai
-     
+
+
 
 
 
