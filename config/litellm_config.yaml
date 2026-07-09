@@ -36,3 +36,8 @@ model_list:
     litellm_params:
       model: huggingface/sentence-transformers/all-MiniLM-L6-v2
       api_key: os.environ/HUGGINGFACE_API_KEY
+
+# LangFuse
+litellm_settings:
+  callbacks:
+    - langfuse_otel

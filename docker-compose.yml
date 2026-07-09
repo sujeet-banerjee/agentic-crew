@@ -114,11 +114,13 @@ services:
     container_name: litellm_proxy
     ports:
       - "4000:4000"
-    env_file:          # <-- ADD THIS DIRECTIVE
-      - .env           # <-- POINT TO YOUR ENV FILE
+    env_file:
+      - .env
     environment:
-      # Optional: Connects to Postgres to save usage logs & spend
       - DATABASE_URL=postgresql://ai_user:ai_password@postgres:5432/ai_database
+      - LANGFUSE_SECRET_KEY=sk-lf-df7d66e3-0ae2-41e4-a33e-071d77c2ac44
+      - LANGFUSE_PUBLIC_KEY=pk-lf-3ca402d4-eec4-4532-9152-d09ebd442b88
+      - LANGFUSE_OTEL_HOST=http://langfuse-web:3000
     # UNCOMMENT AND UPDATE THESE LINES:
     command: [ "--config", "/app/config.yaml", "--detailed_debug" ]
     volumes:

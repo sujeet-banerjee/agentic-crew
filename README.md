@@ -41,6 +41,7 @@ Crucial Step: You must put data/ in your .gitignore file. You do not want to acc
 ###### Start containers:
 
 docker-compose up -d
+docker compose -f docker-compose-langfuse.yml up -d
 
 
 
