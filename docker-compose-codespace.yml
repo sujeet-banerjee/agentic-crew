@@ -52,6 +52,11 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GROQ_API_KEY=${GROQ_API_KEY}
       - HF_API_KEY=${HF_API_KEY}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
+      - LANGFUSE_BASE_URL=${LANGFUSE_BASE_URL}
+      - LANGFUSE_HOST=${LANGFUSE_HOST}
+      - LANGFUSE_DEBUG=${LANGFUSE_DEBUG}
     # environment:
     #   - DATABASE_URL=postgresql://ai_user:ai_password@postgres:5432/ai_database
     #   - LANGFUSE_SECRET_KEY=sk-lf-df7d66e3-0ae2-41e4-a33e-071d77c2ac44
