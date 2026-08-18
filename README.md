@@ -87,3 +87,7 @@ pip install langchain langchain-openai langgraph ragas pandas datasets psycopg p
 
 * 
 
+####### UI Logins
+
+LiteLLM --> admin / sk-lf-df7d66e3-0ae2-41e4-a33e-071d77c2ac44
+

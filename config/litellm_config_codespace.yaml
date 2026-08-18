@@ -1,0 +1,32 @@
+model_list:
+  # 3
+  - model_name: gpt4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.0000100
+
+  # 4. Llama 3.3 70B (Groq - Cloud Fast Inference)
+  - model_name: groq/llama-3.3-70b-versatile
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+
+  # 5. Text Embedding 3 Small (OpenAI - Cloud Embeddings)
+  - model_name: text-embedding-3-small
+    litellm_params:
+      model: text-embedding-3-small
+      api_key: os.environ/OPENAI_API_KEY
+
+  # 6. All MiniLM L6 v2 (Hugging Face - Serverless API)
+  - model_name: huggingface/all-MiniLM-L6-v2
+    litellm_params:
+      model: huggingface/sentence-transformers/all-MiniLM-L6-v2
+      api_key: os.environ/HF_API_KEY
+
+# LangFuse
+litellm_settings:
+  callbacks:
+    - langfuse_otel

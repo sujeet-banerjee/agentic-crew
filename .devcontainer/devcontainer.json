@@ -1,0 +1,9 @@
+{
+  "name": "My Agentic Workspace",
+  "portsAttributes": {
+    "4000": {
+      "label": "LiteLLM Proxy",
+      "visibility": "public"
+    }
+  }
+}
