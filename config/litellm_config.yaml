@@ -36,6 +36,63 @@ model_list:
     litellm_params:
       model: huggingface/sentence-transformers/all-MiniLM-L6-v2
       api_key: os.environ/HUGGINGFACE_API_KEY
+  
+  # 7. Allam 2 7B
+  - model_name: groq/allam-2-7b
+    litellm_params:
+      model: groq/allam-2-7b
+      api_key: os.environ/GROQ_API_KEY
+
+  # 8. Groq Compound
+  - model_name: groq/compound
+    litellm_params:
+      model: groq/compound
+      api_key: os.environ/GROQ_API_KEY
+
+  # 9. Orpheus Arabic Saudi (CanopyLabs)
+  - model_name: groq/canopylabs/orpheus-arabic-saudi
+    litellm_params:
+      model: groq/canopylabs/orpheus-arabic-saudi
+      api_key: os.environ/GROQ_API_KEY
+
+  # 10. Whisper Large V3
+  - model_name: groq/whisper-large-v3
+    litellm_params:
+      model: groq/whisper-large-v3
+      api_key: os.environ/GROQ_API_KEY
+
+  # 11. Orpheus V1 English (CanopyLabs)
+  - model_name: groq/canopylabs/orpheus-v1-english
+    litellm_params:
+      model: groq/canopylabs/orpheus-v1-english
+      api_key: os.environ/GROQ_API_KEY
+
+  # 12. GPT-OSS 20B
+  - model_name: groq/openai/gpt-oss-20b
+    litellm_params:
+      model: groq/openai/gpt-oss-20b
+      api_key: os.environ/GROQ_API_KEY
+    model_info:
+      input_cost_per_token: 0.000000075
+      output_cost_per_token: 0.0000003
+
+  # 13. Qwen 3.6 27B
+  - model_name: groq/qwen/qwen3.6-27b
+    litellm_params:
+      model: groq/qwen/qwen3.6-27b
+      api_key: os.environ/GROQ_API_KEY
+    model_info:
+      input_cost_per_token: 0.0000006
+      output_cost_per_token: 0.000003
+
+  # 14. GPT-OSS 120B
+  - model_name: groq/openai/gpt-oss-120b
+    litellm_params:
+      model: groq/openai/gpt-oss-120b
+      api_key: os.environ/GROQ_API_KEY
+    model_info:
+      input_cost_per_token: 0.00000015
+      output_cost_per_token: 0.0000006
 
 # LangFuse
 litellm_settings:
