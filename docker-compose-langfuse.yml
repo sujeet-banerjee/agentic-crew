@@ -79,6 +79,7 @@ services:
       REDIS_TLS_KEY: ${REDIS_TLS_KEY:-/certs/redis.key}
       EMAIL_FROM_ADDRESS: ${EMAIL_FROM_ADDRESS:-}
       SMTP_CONNECTION_URL: ${SMTP_CONNECTION_URL:-}
+      CLICKHOUSE_DISABLE_LAZY_MATERIALIZATION: true
 
   langfuse-web:
     image: docker.io/langfuse/langfuse:3
@@ -99,6 +100,7 @@ services:
       LANGFUSE_INIT_USER_EMAIL: ${LANGFUSE_INIT_USER_EMAIL:-}
       LANGFUSE_INIT_USER_NAME: ${LANGFUSE_INIT_USER_NAME:-}
       LANGFUSE_INIT_USER_PASSWORD: ${LANGFUSE_INIT_USER_PASSWORD:-}
+      CLICKHOUSE_DISABLE_LAZY_MATERIALIZATION: true
 
   clickhouse:
     image: docker.io/clickhouse/clickhouse-server
