@@ -1,0 +1,27 @@
+# Railway-only LiteLLM configuration. The local config remains unchanged.
+# Ollama and Langfuse are intentionally excluded from this cloud deployment.
+
+model_list:
+  - model_name: gpt4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+
+  - model_name: groq/llama-3.3-70b-versatile
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: text-embedding-3-small
+    litellm_params:
+      model: text-embedding-3-small
+      api_key: os.environ/OPENAI_API_KEY
+
+  - model_name: huggingface/all-MiniLM-L6-v2
+    litellm_params:
+      model: huggingface/sentence-transformers/all-MiniLM-L6-v2
+      api_key: os.environ/HUGGINGFACE_API_KEY
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/LITELLM_DATABASE_URL
