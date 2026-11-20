@@ -1,93 +1,60 @@
 # agentic-crew
 
-What would be the best way to have the minions work right within your laptop, and work with the like agents running elsewhere?
+What would be the best way to have the minions work right within your laptop,
+and work with like agents running elsewhere?
 
+## Deployment options
 
+### Local laptop / Cloudflare tunnel
 
+The existing local deployment remains based on `docker-compose-tunneled.yml`.
+It is intentionally independent of the Railway cloud deployment.
 
+### Railway cloud deployment
 
-#### Locate
+A separate Railway deployment definition is provided in
+[`docker-compose-railway.yml`](docker-compose-railway.yml). It deploys n8n,
+PostgreSQL, Redis, Qdrant, and LiteLLM as separate Railway services. Ollama and
+Langfuse are intentionally excluded from this cloud stack.
 
-1\. The workflows/ folder:
+See [docs/RAILWAY_DEPLOYMENT.md](docs/RAILWAY_DEPLOYMENT.md) for service
+variables, PostgreSQL database creation (`n8n` and `litellm`), persistent
+volumes, private networking, custom-domain setup, and smoke tests.
 
-Whenever you build an awesome agentic workflow in the n8n UI, you can click "Download" in n8n. This exports a JSON file. By saving them in this folder, you version-control your curriculum. The students can simply clone the repo, open n8n, and click "Import from File" to instantly have your exact workflow.
+**Security:** Do not store API keys, passwords, or n8n encryption keys in this
+repository. Configure them in the relevant Railway service Variables tab. Any
+credentials previously committed should be rotated; deleting a value from the
+latest file does not remove it from Git history.
 
+## Repository layout
 
+- `config/litellm_config.yaml`: local LiteLLM configuration (includes Ollama).
+- `config/litellm_config.railway.yaml`: cloud-only LiteLLM configuration.
+- `docker-compose-tunneled.yml`: existing laptop/tunnel deployment.
+- `docker-compose-railway.yml`: Railway cloud deployment.
+- `scripts/` and `notebooks/`: evaluation and utility scripts.
 
-2\. The config/ folder:
+## Local startup
 
-Because we are using LiteLLM as an API gateway/MLOps layer, it requires a config.yaml file to tell it where Ollama is and how to track costs. Keeping configs out of the root directory keeps the repo clean. (Note: you'd map this in your compose file like: - ./config/litellm/config.yaml:/app/config.yaml)
+```bash
+docker compose -f docker-compose-tunneled.yml up -d
+```
 
+If you also run the separate local Langfuse stack, start it using its existing
+local instructions. Do not use the Railway Compose file to start the laptop
+stack.
 
+## Python evaluation environment
 
-3\. The notebooks/ folder:
+Create and activate a virtual environment, then install dependencies from
+`requirements.txt`.
 
-Since RAGAS and standard ML-evaluations are heavily Python-based, this acts as the "Code Sandbox." we provide a requirements.txt so students can set up their local Python environment (or a virtual environment) and immediately start running the Jupyter notebooks against the Docker containers.
+```bash
+python -m venv ai_env
+# Windows PowerShell: .\\ai_env\\Scripts\\Activate.ps1
+# Linux/macOS: source ai_env/bin/activate
+pip install -r requirements.txt
+```
 
-
-
-4\. The data/ folder \& .gitignore:
-
-If you change your docker-compose.yml to use bind mounts instead of named volumes (e.g., ./data/postgres\_data:/var/lib/postgresql/data), all the database data saves directly into this folder.
-
-Crucial Step: You must put data/ in your .gitignore file. You do not want to accidentally push gigabytes of Postgres databases, Qdrant vectors, or Redis memory logs to GitHub!
-
-
-
-
-
-#### Run
-
-###### Start containers:
-
-docker-compose up -d
-docker compose -f docker-compose-langfuse.yml up -d
-
-
-
-###### Locate Stuff
-
-
-
-**Ollama**
-
-&#x20;  **<PowerShell>**
-
-&#x20;  PS C:\\Sujeet\\showcase\\agentic-crew> docker exec ollama ollama list
-
-&#x20;  NAME                       ID              SIZE      MODIFIED
-
-&#x20;  nomic-embed-text:latest    0a109f422b47    274 MB    2 weeks ago
-
-&#x20;  llama3:latest              365c0bd3c000    4.7 GB    2 weeks ago
-
-
-
-&#x20;  PS C:\\Sujeet\\showcase\\agentic-crew> curl http://localhost:11434/api/tags
-
-&#x20;  ...
-
-
-
-
-
-###### Python Scripts Runs:
-
-* When you clone this repo, duplicate the .env.example file, rename the copy to .env, and fill in your actual passwords and keys.
-* Create a virtual ENV for python installs, and switch to the Virtual-env:
-python -m venv ai\_env
-source ai\_env/bin/activate  # Windows: ai\_env\\Scripts\\activate
-pip install langchain langchain-openai langgraph ragas pandas datasets psycopg psycopg-pool streamlit
-
-&#x20;       pip install --upgrade ragas langchain-community langchain langchain-openai
-
-
-
-
-
-* 
-
-####### UI Logins
-
-LiteLLM --> admin / sk-lf-df7d66e3-0ae2-41e4-a33e-071d77c2ac44
-
+Never commit a populated `.env` file, database data directories, vector data,
+or provider credentials.
