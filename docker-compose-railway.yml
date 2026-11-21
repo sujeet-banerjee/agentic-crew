@@ -1,7 +1,8 @@
 # Railway deployment blueprint for the cloud n8n ecosystem.
 #
 # This is intentionally separate from docker-compose-tunneled.yml and the
-# local compose files. Railway creates one service per Compose service.
+# local compose files. Railway translates each Compose service into a separate
+# Railway service; it does not run Docker Compose as the production orchestrator.
 # Configure persistent volumes and service variables in the Railway UI.
 # Keep postgres, redis, qdrant and litellm private; expose n8n only.
 #
@@ -26,8 +27,8 @@ services:
       DB_TYPE: postgresdb
       DB_POSTGRESDB_HOST: postgres.railway.internal
       DB_POSTGRESDB_PORT: 5432
-      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:?Set POSTGRES_DB on the postgres service}
-      DB_POSTGRESDB_USER: ${POSTGRES_USER:?Set POSTGRES_USER on the postgres service}
+      DB_POSTGRESDB_DATABASE: n8n
+      DB_POSTGRESDB_USER: agentic_crew
       DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD on the postgres service}
       DB_POSTGRESDB_SCHEMA: public
     volumes:
@@ -39,8 +40,8 @@ services:
   postgres:
     image: pgvector/pgvector:pg15
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB on the postgres service}
-      POSTGRES_USER: ${POSTGRES_USER:?Set POSTGRES_USER on the postgres service}
+      POSTGRES_DB: n8n
+      POSTGRES_USER: agentic_crew
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD on the postgres service}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -73,20 +74,15 @@ services:
     restart: unless-stopped
 
   litellm:
-    image: ghcr.io/berriai/litellm:main-latest
-    command:
-      - "--config"
-      - "/app/config.yaml"
-      - "--port"
-      - "4000"
+    build:
+      context: .
+      dockerfile: Dockerfile.litellm
     environment:
       LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?Set LITELLM_MASTER_KEY on the litellm service}
       LITELLM_DATABASE_URL: ${LITELLM_DATABASE_URL:?Set LITELLM_DATABASE_URL on the litellm service}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       GROQ_API_KEY: ${GROQ_API_KEY:-}
       HUGGINGFACE_API_KEY: ${HUGGINGFACE_API_KEY:-}
-    volumes:
-      - ./config/litellm_config.railway.yaml:/app/config.yaml:ro
     expose:
       - "4000"
     restart: unless-stopped
