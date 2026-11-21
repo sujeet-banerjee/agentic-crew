@@ -52,6 +52,9 @@ services:
   redis:
     image: redis:7-alpine
     environment:
+      # Railway's Redis template expects both variables for password rotation.
+      # The stock Redis image uses the default ACL user with --requirepass.
+      REDISUSER: default
       REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD on the redis service}
     command:
       - sh
