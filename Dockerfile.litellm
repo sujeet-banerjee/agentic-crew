@@ -1,0 +1,13 @@
+# Railway-specific LiteLLM image.
+# The config is copied into the image so the service does not depend on a
+# host-path bind mount, which Railway cannot preserve as a repository file.
+FROM ghcr.io/berriai/litellm:main-latest
+
+WORKDIR /app
+
+COPY config/litellm_config.railway.yaml /app/config.yaml
+
+EXPOSE 4000
+
+# The upstream LiteLLM image provides its own entrypoint; pass CLI arguments.
+CMD ["--config", "/app/config.yaml", "--port", "4000"]
